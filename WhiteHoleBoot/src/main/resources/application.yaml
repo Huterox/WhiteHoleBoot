@@ -1,0 +1,64 @@
+server:
+  port: 8000
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+  datasource:
+    username: Huterox
+    password: 865989840
+    url: jdbc:mysql://localhost:3306/WhiteHole?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    druid:
+      aop-patterns: com.atguigu.admin.*  #springbean监控
+      filters: stat,wall,slf4j  #所有开启的功能
+
+      stat-view-servlet: #监控页配置
+        enabled: true
+        login-username: admin
+        login-password: admin
+        resetEnable: false
+
+      web-stat-filter: #web监控
+        enabled: true
+        urlPattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      filter:
+        stat: #sql监控
+          slow-sql-millis: 1000
+          logSlowSql: true
+          enabled: true
+        wall: #防火墙
+          enabled: true
+          config:
+            drop-table-allow: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+mybatis-plus:
+  global-config:
+
+    db-config:
+      id-type: auto
+      table-underline: false
+  mapper-locations:
+    - classpath*:/mapping/*.xml
+  configuration:
+    map-underscore-to-camel-case: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#我这边的数据库的名字都是用驼峰命名法搞的，为了避免不必要的转换提高效率
+
+file:
+  upload:
+
+    allowTypes:             #文件上传允许的类型UpPhotoNameUtils的配置
+      - image/jpeg
+      - image/png
+      - image/jpg
+      - image/bmp
